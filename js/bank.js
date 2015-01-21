@@ -48,6 +48,8 @@ function Console(id, desktop){
 	var input_box = $('<input />').attr({
 		'id' 	: 	self.id+'input_box',
 		'type'	: 	'number'
+		}).click(function(){
+			alert();
 		});
 
 	var balance_display = $('<span />').attr({
