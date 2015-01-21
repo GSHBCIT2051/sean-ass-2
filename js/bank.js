@@ -60,7 +60,7 @@ function Console(id, desktop){
 		.attr('id',self.id+'account_selector')
 		.append($('<option />').attr('id',self.id+'option_1'))
 		.append($('<option />').attr('id',self.id+'option_2'))
-		.select(function{
+		.select(function(){
 			loadAccount($(this).val());	
 		});
 	
