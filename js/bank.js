@@ -57,9 +57,16 @@ function Console(id, desktop){
 		});
 
 	var account_selector = 	$('<select />')
-								.attr('id',self.id+'account_selector')
-								.append($('<option />').attr('id',self.id+'option_1'))
-								.append($('<option />').attr('id',self.id+'option_2'));
+		.attr('id',self.id+'account_selector')
+		.append($('<option />').attr('id',self.id+'option_1'))
+		.append($('<option />').attr('id',self.id+'option_2'))
+		.select(function{
+			loadAccount($(this).val());	
+		});
+	
+	function loadAccount(val){
+		alert(val);
+	}
 
 	function updateBalanceDisplay(amount){
 		balance_display.text(amount);
