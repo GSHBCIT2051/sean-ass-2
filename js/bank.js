@@ -37,6 +37,8 @@ function BankAccount(type, number){
 
 
 
+// console id is just an arbitrary number
+// desktop is the DOM element that the console will boot in.
 function Console(id, desktop){
 	var self = this;
 
