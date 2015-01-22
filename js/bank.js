@@ -36,11 +36,11 @@ function BankAccount(type, number){
 } // BankAccount() end
 
 
-function Console(id, desktop){
+function Console(id, desktop, accounts){
 	var self = this;
 
 	self.id = id;
-
+	
 	// instatiate two accounts
 	var chequing = new BankAccount('Chequing',111);
 	var savings = new BankAccount('Savings',222);
