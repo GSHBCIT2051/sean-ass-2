@@ -76,7 +76,7 @@ function Console(id, desktop, records){
 	}
 
 	function loadAccount(val){
-		alert(accounts[val].getBalance());
+		updateBalanceDisplay(accounts[val].getBalance().toLocaleString("en", {style: "currency", currency: "CAD", maximumFractionDigits: 2}));
 	}
 
 	function updateBalanceDisplay(amount){
@@ -99,11 +99,13 @@ function Console(id, desktop, records){
 		desktop.append('<label>Account: </label>');
 		desktop.append(account_selector);
 		desktop.append('<br />');
-		desktop.append('<label>Action: </label>');
+		desktop.append('<label>Action: &nbsp;&nbsp;&nbsp;</label>');
 		desktop.append(deposit_withdrawl_selector);
 		desktop.append('<br />');
+		desktop.append('<label>Amount: </label>');
 		desktop.append(input_box);
 		desktop.append('<br />');
+		desktop.append('<label>Balance: </label>');
 		desktop.append(balance_display);
 
 	}
