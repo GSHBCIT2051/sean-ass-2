@@ -40,11 +40,19 @@ function Console(id, desktop, accounts){
 	var self = this;
 
 	self.id = id;
-	
+    
+
 	// instatiate two accounts
 	var chequing = new BankAccount('Chequing',111);
 	var savings = new BankAccount('Savings',222);
 	
+	var records = {"Savings":333,
+					"Chequing":444,
+					"TFSA":555 
+				};
+
+	var accounts = {};
+
 	// Element Ids
 	var input_box_id = self.id+'input_box';
 	var balance_display_id = self.id+'balance_display';
@@ -63,10 +71,18 @@ function Console(id, desktop, accounts){
 
 	var account_selector = 	$('<select />')
 		.attr('id', account_selector_id).append('<option />');
-		
+	
+
 	
 
 	// methods
+
+	function loadAllRecords(records){
+		records.forEach(function(bankAccount) {
+    		;;
+		});
+	}
+
 	function loadAccount(val){
 		alert(val);
 	}
@@ -83,8 +99,12 @@ function Console(id, desktop, accounts){
 
 	// append elements to page
 	function createDomElements() {
-		setAccountOption(chequing);
-		setAccountOption(savings);
+		//setAccountOption(chequing);
+		//setAccountOption(savings);
+		//accounts.forEach(function(account){
+		//		setAccountOption(account);
+		//	});
+loadAllRecords(records);
 		desktop.append(account_selector);
 		desktop.append('<br />');
 		desktop.append(input_box);
