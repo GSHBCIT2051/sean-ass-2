@@ -36,10 +36,6 @@ function BankAccount(type, number){
 } // BankAccount() end
 
 
-// The Console creates the DOM elements in a container element (desktop)
-// and binds account functions to them
-// console id is just an arbitrary number
-// desktop is the DOM element that the console will boot in.
 function Console(id, desktop){
 	var self = this;
 
