@@ -6,7 +6,7 @@ function c(val){
 	console.log(val);
 }
 
-function BankAccount(type, number){
+function BankAccount(number, type){
 	var self = this;
 
 	self.type = type;
@@ -36,20 +36,14 @@ function BankAccount(type, number){
 } // BankAccount() end
 
 
-function Console(id, desktop, accounts){
+function Console(id, desktop, records){
 	var self = this;
+	var records = records;
 
 	self.id = id;
     
 
 	// instatiate two accounts
-	var chequing = new BankAccount('Chequing',111);
-	var savings = new BankAccount('Savings',222);
-	
-	var records = {"Savings":333,
-					"Chequing":444,
-					"TFSA":555 
-				};
 
 	var accounts = {};
 
@@ -78,9 +72,9 @@ function Console(id, desktop, accounts){
 	// methods
 
 	function loadAllRecords(records){
-		records.forEach(function(bankAccount) {
-    		;;
-		});
+		for (var account_number in records) {
+  			accounts[account_number] = new BankAccount(account_number, records[account_number]);
+		}
 	}
 
 	function loadAccount(val){
@@ -90,10 +84,13 @@ function Console(id, desktop, accounts){
 	function updateBalanceDisplay(amount){
 		balance_display.text(amount);
 	}
-	function setAccountOption(acct){
-		var option = $('<option />').attr('id',self.id+acct.number+acct.type).text(acct.type+" - Acct."+acct.number).val(acct.type+acct.number);
-		account_selector.append(option);
-		
+
+	function setAccountOption(accounts){
+		for (var account in accounts){
+			var a = accounts[account];
+			var option = $('<option />').attr('id',self.id+a.number+a.type).text(a.type+" - Acct. "+a.number).val(a.type+a.number);
+			account_selector.append(option);
+		}
 
 	}
 
@@ -105,6 +102,7 @@ function Console(id, desktop, accounts){
 		//		setAccountOption(account);
 		//	});
 loadAllRecords(records);
+setAccountOption(accounts);
 		desktop.append(account_selector);
 		desktop.append('<br />');
 		desktop.append(input_box);
@@ -130,8 +128,13 @@ loadAllRecords(records);
 } // Console() end
 
 
+var records = {333: "Savings",
+					444: "Chequing",
+					555: "TFSA" 
+				};
 
-var console = new Console('kjnfehjbe',$("#desktop"));
+
+var console = new Console('kjnfehjbe',$("#desktop"), records);
 console.boot();
 
 
