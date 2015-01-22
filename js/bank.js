@@ -129,9 +129,9 @@ setAccountOption(accounts);
 
 
 var records = {333: "Savings",
-					444: "Chequing",
-					555: "TFSA" 
-				};
+		444: "Chequing",
+		555: "TFSA" 
+	};
 
 
 var console = new Console('kjnfehjbe',$("#desktop"), records);
