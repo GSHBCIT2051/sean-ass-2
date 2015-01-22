@@ -1,11 +1,4 @@
 
-// DOM Properties
-//outerBox 	// bounding box for account window
-
-function c(val){
-	console.log(val);
-}
-
 function BankAccount(number, type){
 	var self = this;
 
@@ -53,6 +46,7 @@ function Console(id, desktop, records){
 	var input_box_id = self.id+'input_box';
 	var balance_display_id = self.id+'balance_display';
 	var account_selector_id = self.id+'account_selector';
+	var deposit_withdrawl_selector_id = self.id+'deposit_withdrawl_selector';
 
 
 
@@ -69,7 +63,8 @@ function Console(id, desktop, records){
 	var account_selector = 	$('<select />')
 		.attr('id', account_selector_id).append($('<option />').text('Select Account:'));
 	
-
+	var deposit_withdrawl_selector = $('<select />')
+		.attr('id', deposit_withdrawl_selector_id).append($('<option />').text('Deposit').val('deposit')).append($('<option />').text('Withdrawl').val('withdrawl'));
 	
 
 	// methods
@@ -101,7 +96,11 @@ function Console(id, desktop, records){
 	function createDomElements() {
 		loadAllRecords(records);
 		setAccountOption(accounts);
+		desktop.append('<label>Account: </label>');
 		desktop.append(account_selector);
+		desktop.append('<br />');
+		desktop.append('<label>Action: </label>');
+		desktop.append(deposit_withdrawl_selector);
 		desktop.append('<br />');
 		desktop.append(input_box);
 		desktop.append('<br />');
