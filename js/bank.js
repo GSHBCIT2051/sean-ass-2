@@ -45,8 +45,10 @@ function Console(id, desktop, records){
 	// Element Ids
 	var input_box_id = self.id+'input_box';
 	var balance_display_id = self.id+'balance_display';
+	var net_worth_display_id = self.id+'net_worth_display';
 	var account_selector_id = self.id+'account_selector';
 	var deposit_withdrawl_selector_id = self.id+'deposit_withdrawl_selector';
+	var submit_button_id = self.id+'submit_button';
 
 
 
@@ -60,29 +62,50 @@ function Console(id, desktop, records){
 		'id'	: 	balance_display_id
 		});
 
+	var net_worth_display = $('<span />').attr({
+		'id'	: 	net_worth_display_id
+		});
+
 	var account_selector = 	$('<select />')
-		.attr('id', account_selector_id).append($('<option />').text('Select Account:'));
+		.attr('id', account_selector_id).append($('<option />').text('Select Account:').attr('id',self.id+'temp'));
 	
 	var deposit_withdrawl_selector = $('<select />')
 		.attr('id', deposit_withdrawl_selector_id).append($('<option />').text('Deposit').val('deposit')).append($('<option />').text('Withdrawl').val('withdrawl'));
-	
+
+	var submit_button = $('<button />').text('Submit').attr('id',submit_button_id);
+
 
 	// methods
-
 	function loadAllRecords(records){
 		for (var account_number in records) {
   			accounts[account_number] = new BankAccount(account_number, records[account_number]);
 		}
 	}
 
+
 	function loadAccount(val){
 		updateBalanceDisplay(accounts[val].getBalance().toLocaleString("en", {style: "currency", currency: "CAD", maximumFractionDigits: 2}));
 	}
 
+	// Updates the balance displayed on the page
 	function updateBalanceDisplay(amount){
 		balance_display.text(amount);
 	}
 
+	function getNetWorth(accounts){
+		var netWorth = 0;
+		for (var account in accounts){
+			var a = accounts[account];
+			netWorth += a.getBalance();
+		}
+		return netWorth;
+	}
+
+	function updateNetWorthDisplay(accounts){
+		net_worth_display.text(getNetWorth(accounts).toLocaleString("en", {style: "currency", currency: "CAD", maximumFractionDigits: 2}));
+	}
+
+	// takes an object full of BankAccounts and created <option> elements in the account_selection ddl
 	function setAccountOption(accounts){
 		for (var account in accounts){
 			var a = accounts[account];
@@ -96,20 +119,17 @@ function Console(id, desktop, records){
 	function createDomElements() {
 		loadAllRecords(records);
 		setAccountOption(accounts);
-		desktop.append('<label>Account: </label>');
-		desktop.append(account_selector);
-		desktop.append('<br />');
-		desktop.append('<label>Action: &nbsp;&nbsp;&nbsp;</label>');
-		desktop.append(deposit_withdrawl_selector);
-		desktop.append('<br />');
-		desktop.append('<label>Amount: </label>');
-		desktop.append(input_box);
-		desktop.append('<br />');
-		desktop.append('<label>Balance: </label>');
-		desktop.append(balance_display);
+		desktop.append('<label>Account: </label>').append(account_selector).append('<br />');
+		desktop.append('<label>Action: &nbsp;&nbsp;&nbsp;</label>').append(deposit_withdrawl_selector).append('<br />');
+		desktop.append('<label>Amount: </label>').append(input_box).append('<br />');
+		desktop.append('<label>Balance: </label>').append(balance_display).append('<br />');
+		desktop.append('<label>Net Worth: </label>').append(net_worth_display).append('<br />');
+		desktop.append(submit_button)
+		
 
 	}
 
+	// This adds the JS bindings to the elements on the page
 	function bindDomElements(){
 		$("#"+input_box_id).click(function(){
 			;;
@@ -117,9 +137,12 @@ function Console(id, desktop, records){
 
 		$("#"+account_selector_id).change(function(val){
 			loadAccount($(this).val());	
+			updateNetWorthDisplay(accounts);
+			$(this).children('#'+self.id+'temp').remove();
 		});
 	}
 
+	// This creates the Console object and performs all the JS bindings to make the app functional
 	self.boot = function(){
 		createDomElements();
 		bindDomElements();
