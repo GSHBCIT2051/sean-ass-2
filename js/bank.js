@@ -36,6 +36,8 @@ function BankAccount(number, type){
 } // BankAccount() end
 
 
+
+
 function Console(id, desktop, records){
 	var self = this;
 	var records = records;
@@ -53,6 +55,7 @@ function Console(id, desktop, records){
 	var account_selector_id = self.id+'account_selector';
 
 
+
 	// DOM Elements
 	var input_box = $('<input />').attr({
 		'id' 	: 	input_box_id,
@@ -64,7 +67,7 @@ function Console(id, desktop, records){
 		});
 
 	var account_selector = 	$('<select />')
-		.attr('id', account_selector_id).append('<option />');
+		.attr('id', account_selector_id).append($('<option />').text('Select Account:'));
 	
 
 	
@@ -78,7 +81,7 @@ function Console(id, desktop, records){
 	}
 
 	function loadAccount(val){
-		alert(val);
+		alert(accounts[val].getBalance());
 	}
 
 	function updateBalanceDisplay(amount){
@@ -88,7 +91,7 @@ function Console(id, desktop, records){
 	function setAccountOption(accounts){
 		for (var account in accounts){
 			var a = accounts[account];
-			var option = $('<option />').attr('id',self.id+a.number+a.type).text(a.type+" - Acct. "+a.number).val(a.type+a.number);
+			var option = $('<option />').attr('id',self.id+a.number+a.type).text(a.type+" - Acct. "+a.number).val(a.number);
 			account_selector.append(option);
 		}
 
@@ -96,13 +99,8 @@ function Console(id, desktop, records){
 
 	// append elements to page
 	function createDomElements() {
-		//setAccountOption(chequing);
-		//setAccountOption(savings);
-		//accounts.forEach(function(account){
-		//		setAccountOption(account);
-		//	});
-loadAllRecords(records);
-setAccountOption(accounts);
+		loadAllRecords(records);
+		setAccountOption(accounts);
 		desktop.append(account_selector);
 		desktop.append('<br />');
 		desktop.append(input_box);
@@ -115,7 +113,8 @@ setAccountOption(accounts);
 		$("#"+input_box_id).click(function(){
 			;;
 		});
-		$("#"+account_selector_id).change(function(){
+
+		$("#"+account_selector_id).change(function(val){
 			loadAccount($(this).val());	
 		});
 	}
