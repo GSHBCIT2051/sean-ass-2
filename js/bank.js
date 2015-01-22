@@ -146,6 +146,7 @@ function Console(id, desktop, records){
 	self.boot = function(){
 		createDomElements();
 		bindDomElements();
+		updateNetWorthDisplay(accounts);
 	}
 
 } // Console() end
