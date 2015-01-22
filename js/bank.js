@@ -17,7 +17,7 @@ function BankAccount(number, type){
 	}
 
 	self.withdrawl = function(money){
-		if (money > self.balance){
+		if (money > balance){
 			return "Insufficient Funds"
 		}
 		else{
@@ -41,6 +41,7 @@ function Console(id, desktop, records){
 	// instatiate two accounts
 
 	var accounts = {};
+	var activeAccount;
 
 	// Element Ids
 	var input_box_id = self.id+'input_box';
@@ -84,12 +85,28 @@ function Console(id, desktop, records){
 
 
 	function loadAccount(val){
-		updateBalanceDisplay(accounts[val].getBalance().toLocaleString("en", {style: "currency", currency: "CAD", maximumFractionDigits: 2}));
+		activeAccount = accounts[val];
+		updateBalanceDisplay(activeAccount);
+		input_box.val('');
+	}
+
+	function performTransaction(){
+		var actionType = deposit_withdrawl_selector.val();
+		var transactionValue = input_box.val();
+		if(actionType == "deposit"){
+			alert(activeAccount.deposit(Number(transactionValue)));
+		}
+		else if (actionType == "withdrawl"){
+			alert(activeAccount.withdrawl(Number(transactionValue)));
+		}
+		updateBalanceDisplay();
+		updateNetWorthDisplay(accounts);
+		input_box.val('');
 	}
 
 	// Updates the balance displayed on the page
-	function updateBalanceDisplay(amount){
-		balance_display.text(amount);
+	function updateBalanceDisplay(){
+		balance_display.text(activeAccount.getBalance().toLocaleString("en", {style: "currency", currency: "CAD", maximumFractionDigits: 2}));
 	}
 
 	function getNetWorth(accounts){
@@ -140,6 +157,10 @@ function Console(id, desktop, records){
 			updateNetWorthDisplay(accounts);
 			$(this).children('#'+self.id+'temp').remove();
 		});
+
+		$("#"+submit_button_id).click(function(){
+			performTransaction();
+		});
 	}
 
 	// This creates the Console object and performs all the JS bindings to make the app functional
@@ -152,7 +173,8 @@ function Console(id, desktop, records){
 } // Console() end
 
 
-var records = {333: "Savings",
+var records = {
+		333: "Savings",
 		444: "Chequing",
 		555: "TFSA" 
 	};
