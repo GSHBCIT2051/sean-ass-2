@@ -33,10 +33,11 @@ function BankAccount(type, number){
 		}
 	}
 
-}
+} // BankAccount() end
 
 
-
+// The Console creates the DOM elements in a container element (desktop)
+// and binds account functions to them
 // console id is just an arbitrary number
 // desktop is the DOM element that the console will boot in.
 function Console(id, desktop){
@@ -110,25 +111,13 @@ function Console(id, desktop){
 		bindDomElements();
 	}
 
-}
+} // Console() end
 
 
-
-
-var b = new BankAccount('chequing', 1735683);
-console.log(b.getBalance());
-c(b.deposit(1000000));
-c(b.getBalance());
-c(b.withdrawl(1000000));
-c(b.getBalance());
-
-// boot up the account windows
 
 var console = new Console('kjnfehjbe',$("#desktop"));
 console.boot();
 
-
-//load the account data
 
 
 
